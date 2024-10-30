@@ -1,0 +1,55 @@
+/* src/App.css */
+.App {
+  text-align: left;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.App-logo {
+  width: 150px;
+  height: auto;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-bottom: 2px solid red;
+}
+
+.App-header h1 {
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.App-body {
+  padding: 40px;
+  background-color: #fff;
+  font-size: 1.2rem;
+  color: black;
+}
+
+.App-footer {
+  text-align: center;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-top: 2px solid red;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.App-footer p {
+  margin: 0;
+  font-style: italic; /* Italicizes the footer text */
+}
+
+.App-body p,
+.App-footer p {
+  margin: 0;
+}
