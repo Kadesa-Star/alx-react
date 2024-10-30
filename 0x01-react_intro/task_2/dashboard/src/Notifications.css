@@ -1,0 +1,14 @@
+/* src/Notifications.css */
+
+.Notifications {
+  border: 1px solid #eaeaea;
+  padding: 20px;
+}
+
+[data-priority="default"] {
+  color: blue; /* default priority */
+}
+
+[data-priority="urgent"] {
+  color: red; /* urgent priority */
+}
