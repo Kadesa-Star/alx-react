@@ -9,7 +9,8 @@ $('body').append('<p id="count"></p>');
 $('body').append('<p>Copyright - Holberton School</p>');
 
 // Bind the debounce function to the button click event
-$('button').on('click', _.debounce(updateCounter, 500));
+const $button = $("<button>Click here to get started</button>").on("click",
+	_.debounce( updateCounter, 500, { leading: true, trailing: false }));
 
 // Initialize the click counter
 let count = 0;
