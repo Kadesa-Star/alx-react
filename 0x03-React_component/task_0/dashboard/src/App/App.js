@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import Notifications from '../Notifications/Notifications';
-import { getLatestNotification } from '../utils/utils';
-import Login from '../Login/Login';
+import React, { Fragment, Component } from 'react';
 import Header from '../Header/Header';
+import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
+import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import PropTypes from 'prop-types';
+import { getLatestNotification } from '../utils/utils';
 
 // Define the course list and notifications list outside the component for better readability
 const listCourses = [
@@ -15,31 +15,21 @@ const listCourses = [
 ];
 
 const listNotifications = [
-  { id: 1, type: "default", value: "New course available" },
-  { id: 2, type: "urgent", value: "New resume available" },
-  {
-    id: 3,
-    html: {
-      __html: getLatestNotification(),
-    },
-    type: "urgent",
-  },
+  { id: 1, type: 'default', value: 'New course available' },
+  { id: 2, type: 'urgent', value: 'New resume available' },
+  { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
 ];
 
 class App extends Component {
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <div className="App">
+      <Fragment>
         <Notifications listNotifications={listNotifications} />
         <Header />
-        <div className="App-body">
-          {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
-        </div>
-        <div className="App-footer">
-          <Footer />
-        </div>
-      </div>
+        {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+        <Footer />
+      </Fragment>
     );
   }
 }
