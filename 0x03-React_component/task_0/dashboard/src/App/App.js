@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
@@ -7,13 +7,11 @@ import CourseList from '../CourseList/CourseList';
 import PropTypes from 'prop-types';
 import { getLatestNotification } from '../utils/utils';
 
-// Define the course list and notifications list outside the component for better readability
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
   { id: 2, name: 'Webpack', credit: 20 },
   { id: 3, name: 'React', credit: 40 },
 ];
-
 const listNotifications = [
   { id: 1, type: 'default', value: 'New course available' },
   { id: 2, type: 'urgent', value: 'New resume available' },
@@ -21,6 +19,9 @@ const listNotifications = [
 ];
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     const { isLoggedIn } = this.props;
     return (
@@ -34,12 +35,10 @@ class App extends Component {
   }
 }
 
-// Set default props for isLoggedIn
 App.defaultProps = {
   isLoggedIn: false,
 };
 
-// Define prop types for better type checking
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
 };
