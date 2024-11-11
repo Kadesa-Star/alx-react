@@ -1,50 +1,39 @@
-import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React from "react";
+import { shallow } from 'enzyme';
+import CourseListRow from "./CourseListRow";
 
-function CourseListRow({ isHeader, textFirstCell, textSecondCell }) {
-  // Define inline styles for row and header row
-  const styleRow = { backgroundColor: '#f5f5f5ab' };
-  const styleHeaderRow = { backgroundColor: '#deb5b545' };
+describe('Basic React Tests - <CourseListRow />', function() {
+	it('Should render without crashing', () => {
+		const wrapper = shallow(<CourseListRow textFirstCell='start' />);
+		expect(wrapper.exists()).toBeTruthy();
+	});
 
-  // Determine what to render based on whether it's a header row or not
-  let myElement;
-  if (isHeader) {
-    if (textSecondCell === null) {
-      myElement = <th colSpan="2">{textFirstCell}</th>;
-    } else {
-      myElement = (
-        <Fragment>
-          <th>{textFirstCell}</th>
-          <th>{textSecondCell}</th>
-        </Fragment>
-      );
-    }
-  } else {
-    myElement = (
-      <Fragment>
-        <td>{textFirstCell}</td>
-        <td>{textSecondCell}</td>
-      </Fragment>
-    );
-  }
+	it('When isHeader is true - Should render one cell with colspan = 2 when textSecondCell does not exist', function() {
+		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell='start' />);
+		expect(wrapper.find('th').prop('colSpan')).toEqual('2');
+	});
 
-  // Select the appropriate background style
-  const stylesBackground = isHeader ? styleHeaderRow : styleRow;
+	it('When isHeader is true - Should render two cells when textSecondCell is present', function() {
+		const wrapper = shallow
+		(
+			<CourseListRow
+				isHeader={true}
+				textFirstCell='start'
+				textSecondCell='build'
+			/>
+		);
+		expect(wrapper.find('th')).toHaveLength(2);
+	});
 
-  return <tr style={stylesBackground}>{myElement}</tr>;
-}
-
-// Prop validation
-CourseListRow.propTypes = {
-  isHeader: PropTypes.bool,
-  textFirstCell: PropTypes.string.isRequired,
-  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-
-// Default props for isHeader and textSecondCell
-CourseListRow.defaultProps = {
-  isHeader: false,
-  textSecondCell: null,
-};
-
-export default CourseListRow;
+	it('When isHeader is false - Should render correctly two td elements within a tr element', function(){
+		const wrapper = shallow
+		(
+			<CourseListRow
+				isHeader={false}
+				textFirstCell='Txt1'
+				textSecondCell='Txt2'
+			/>
+		);
+		expect(wrapper.find('tr').children('td')).toHaveLength(2);
+	});
+});
