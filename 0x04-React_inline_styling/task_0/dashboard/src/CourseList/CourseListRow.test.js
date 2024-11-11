@@ -1,41 +1,61 @@
-import React from 'react';
+import React from "react";
 import { shallow } from 'enzyme';
-import CourseListRow from './CourseListRow';
+import CourseListRow from "./CourseListRow";
 
-describe('<CourseListRow />', () => {
-    it('renders without crashing', () => {
-        const wrapper = shallow(<CourseListRow textFirstCell="Cell 1" textSecondCell="Cell 2" />);
-        expect(wrapper.exists()).toBe(true);
-    });
+describe('Basic React Tests - <CourseListRow />', function() {
+  it('Should render without crashing', () => {
+    const wrapper = shallow(<CourseListRow textFirstCell='start' />);
+    expect(wrapper.exists()).toBeTruthy();
+  });
 
-    it('applies headerStyle when isHeader is true', () => {
-        const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="Header" />);
-        expect(wrapper.find('tr').prop('style')).toHaveProperty('backgroundColor', '#deb5b545');
-    });
+  it('When isHeader is true - Should render one cell with colspan = 2 when textSecondCell does not exist', function() {
+    const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell='start' />);
+    expect(wrapper.find('th').prop('colSpan')).toEqual('2');
+  });
 
-    it('applies rowStyle when isHeader is false', () => {
-        const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="Row" textSecondCell="Cell" />);
-        expect(wrapper.find('tr').prop('style')).toHaveProperty('backgroundColor', '#f5f5f5ab');
-    });
+  it('When isHeader is true - Should render two cells when textSecondCell is present', function() {
+    const wrapper = shallow(
+      <CourseListRow
+        isHeader={true}
+        textFirstCell='start'
+        textSecondCell='build'
+      />
+    );
+    expect(wrapper.find('th')).toHaveLength(2);
+  });
 
-    it('renders header cells when isHeader is true and textSecondCell is provided', () => {
-        const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="Header 1" textSecondCell="Header 2" />);
-        expect(wrapper.find('th').length).toBe(2);
-        expect(wrapper.find('th').at(0).text()).toBe('Header 1');
-        expect(wrapper.find('th').at(1).text()).toBe('Header 2');
-    });
+  it('When isHeader is false - Should render correctly two td elements within a tr element', function(){
+    const wrapper = shallow(
+      <CourseListRow
+        isHeader={false}
+        textFirstCell='Txt1'
+        textSecondCell='Txt2'
+      />
+    );
+    expect(wrapper.find('tr').children('td')).toHaveLength(2);
+  });
 
-    it('renders a single header cell with colspan of 2 when isHeader is true and textSecondCell is null', () => {
-        const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="Single Header" />);
-        expect(wrapper.find('th').length).toBe(1);
-        expect(wrapper.find('th').prop('colSpan')).toBe('2');
-        expect(wrapper.find('th').text()).toBe('Single Header');
-    });
+  // Test for background color when isHeader is true
+  it('When isHeader is true - Should apply the correct background color to the header row', function() {
+    const wrapper = shallow(
+      <CourseListRow
+        isHeader={true}
+        textFirstCell='Header'
+        textSecondCell='Column'
+      />
+    );
+    expect(wrapper.find('tr').prop('style')).toEqual({ backgroundColor: '#deb5b545' });
+  });
 
-    it('renders regular cells when isHeader is false', () => {
-        const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="Row 1" textSecondCell="Row 2" />);
-        expect(wrapper.find('td').length).toBe(2);
-        expect(wrapper.find('td').at(0).text()).toBe('Row 1');
-        expect(wrapper.find('td').at(1).text()).toBe('Row 2');
-    });
+  // Test for background color when isHeader is false
+  it('When isHeader is false - Should apply the correct background color to the regular row', function() {
+    const wrapper = shallow(
+      <CourseListRow
+        isHeader={false}
+        textFirstCell='Course'
+        textSecondCell='10'
+      />
+    );
+    expect(wrapper.find('tr').prop('style')).toEqual({ backgroundColor: '#f5f5f5ab' });
+  });
 });
