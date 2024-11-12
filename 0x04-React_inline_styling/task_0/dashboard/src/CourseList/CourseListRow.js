@@ -1,39 +1,40 @@
-import React from "react";
-import { shallow } from 'enzyme';
-import CourseListRow from "./CourseListRow";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-describe('Basic React Tests - <CourseListRow />', function() {
-	it('Should render without crashing', () => {
-		const wrapper = shallow(<CourseListRow textFirstCell='start' />);
-		expect(wrapper.exists()).toBeTruthy();
-	});
+const headerStyle = { backgroundColor: '#deb5b545' };
+const rowStyle = { backgroundColor: '#f5f5f5ab' };
 
-	it('When isHeader is true - Should render one cell with colspan = 2 when textSecondCell does not exist', function() {
-		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell='start' />);
-		expect(wrapper.find('th').prop('colSpan')).toEqual('2');
-	});
+const CourseListRow = ({ isHeader, textFirstCell, textSecondCell }) => {
+  return (
+    <tr style={isHeader ? headerStyle : rowStyle}>
+      {isHeader ? (
+        textSecondCell === null ? (
+          <th colSpan="2">{textFirstCell}</th>
+        ) : (
+          <>
+            <th>{textFirstCell}</th>
+            <th>{textSecondCell}</th>
+          </>
+        )
+      ) : (
+        <>
+          <td>{textFirstCell}</td>
+          <td>{textSecondCell}</td>
+        </>
+      )}
+    </tr>
+  );
+};
 
-	it('When isHeader is true - Should render two cells when textSecondCell is present', function() {
-		const wrapper = shallow
-		(
-			<CourseListRow
-				isHeader={true}
-				textFirstCell='start'
-				textSecondCell='build'
-			/>
-		);
-		expect(wrapper.find('th')).toHaveLength(2);
-	});
+CourseListRow.propTypes = {
+  isHeader: PropTypes.bool,
+  textFirstCell: PropTypes.string.isRequired,
+  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
-	it('When isHeader is false - Should render correctly two td elements within a tr element', function(){
-		const wrapper = shallow
-		(
-			<CourseListRow
-				isHeader={false}
-				textFirstCell='Txt1'
-				textSecondCell='Txt2'
-			/>
-		);
-		expect(wrapper.find('tr').children('td')).toHaveLength(2);
-	});
-});
+CourseListRow.defaultProps = {
+  isHeader: false,
+  textSecondCell: null,
+};
+
+export default CourseListRow;

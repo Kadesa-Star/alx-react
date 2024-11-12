@@ -1,6 +1,5 @@
-// config/setupTests.js
-import { configure } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import 'regenerator-runtime/runtime'
 
-// Set up Enzyme with React 17 adapter
-configure({ adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() });

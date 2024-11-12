@@ -20,14 +20,16 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.7.1",
+    "enzyme": "^3.11.0",
     "file-loader": "^6.2.0",
     "image-webpack-loader": "^8.1.0",
     "inline-source-map": "^0.6.2",
     "jest": "^27.5.1",
     "npm": "^8.5.4",
+    "regenerator-runtime": "^0.14.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2",
@@ -35,17 +37,16 @@
   },
   "dependencies": {
     "babel": "^6.23.0",
-    "enzyme": "^3.11.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "jest": {
-    "testPathDirs": [
-      "<rootDir>/src"
-    ],
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "<rootDir>/config/setupTests.js"
+    ],
+    "roots": [
+      "<rootDir>/task_0/dashboard/src"
     ],
     "moduleNameMapper": {
       "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js",
