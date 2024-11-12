@@ -1,8 +1,16 @@
 import { shallow } from "enzyme";
 import React from "react";
 import NotificationItem from "./NotificationItem";
+import { StyleSheetTestUtils } from "aphrodite";
 
 describe("<Notifications />", () => {
+  beforeAll(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+  afterAll(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
+
   it("NotificationItem renders without crashing", () => {
     const wrapper = shallow(<NotificationItem />);
     expect(wrapper.exists()).toEqual(true);
@@ -23,9 +31,12 @@ describe("<Notifications />", () => {
     );
     wrapper.update();
     const listItem = wrapper.find("li");
-    expect(listItem.html()).toEqual(
-      '<li data-notification-type="default"><u>test</u></li>'
-    );
+    // expect(listItem.html()).toEqual(
+    //   '<li data-notification-type="default"><u>test</u></li>'
+    // );
+
+    expect(listItem.props()["data-notification-type"]).toEqual("default");
+    expect(listItem.html()).toContain("<u>test</u>");
   });
   it("when calling the function markAsRead on an instance of the component, the spy is being called with the right message", () => {
     const id = 27;
