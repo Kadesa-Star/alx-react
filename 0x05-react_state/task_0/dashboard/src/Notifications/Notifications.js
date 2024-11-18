@@ -40,7 +40,7 @@ class Notification extends Component {
 		} = this.props;
 
 		return (
-			<React.Fragment>
+			<>
 				<div className={css(notificationStyles.pDiv)}>
 					<p 
 						className={css(animationStyle.animation)}
@@ -51,39 +51,40 @@ class Notification extends Component {
 				</div>
 				{displayDrawer && (
 					<div className={css(notificationStyles.notifications)}>
-						<button 
-							style={{ position: 'absolute', background: 'transparent', border: 'none', right: '20px' }}
+						<button style={{
+							position: 'absolute',
+							background: 'transparent',
+							border: 'none',
+							right: '20px',
+						}}
 							aria-label='close'
-							onClick={handleHideDrawer}
-						>
+							onClick={() => {
+								console.log('Close button has been clicked');
+							}}>
 							<img
 								src={close_icon}
 								className={css(notificationStyles.x_button)}
-								alt="close" 
-								height="15px" 
-								width="15px"
-							/>
+								alt="close" height="15px" width="15px"
+								onClick={handleHideDrawer}
+								id="x_button">
+							</img>
 						</button>
 						<p>Here is the list of notifications</p>
 						<ul>
-							{listNotifications.length === 0 ? (
-								<li>No notification available yet</li>
-							) : (
-								listNotifications.map(notification => (
-									<NotificationItem
-										key={notification.id}
-										type={notification.type}
-										value={notification.value}
-										html={notification.html}
-										markAsRead={this.markAsRead}
-										id={notification.id}
-									/>
-								))
+							{/* listNotifications is empty condition */}
+							{listNotifications.length === 0 && (
+								<li>
+									<p>No notification available yet</p>
+								</li>
 							)}
+							{/* render listNotifications */}
+							{listNotifications.map(notification => (
+								<NotificationItem key={notification.id} type={notification.type} value={notification.value} html={notification.html} markAsRead={this.markAsRead} id={notification.id} />
+							))}
 						</ul>
 					</div>
 				)}
-			</React.Fragment>
+			</>
 		)
 	}
 }
@@ -100,6 +101,7 @@ const notificationStyles = StyleSheet.create({
 			fontSize: '20px',
 		}
 	},
+
 	x_button: {
 		'@media (min-width: 350px)': {
 			position: 'absolute',
@@ -107,6 +109,7 @@ const notificationStyles = StyleSheet.create({
 			right: '10px',
 		}
 	},
+
 	pDiv: {
 		position: 'absolute',
 		top: `0px`,
@@ -115,19 +118,24 @@ const notificationStyles = StyleSheet.create({
 	},
 })
 
-const combinedAnimation = {
-	'0%': { opacity: 0, transform: 'translateY(0)' },
+const opacityAnimation = {
+	'0%': { opacity: 0 },
+	'100%': { opacity: 1 },
+}
+
+const translateYAnimation = {
+	'0%': { transform: 'translateY(0px)' },
 	'50%': { transform: 'translateY(-10px)' },
-	'100%': { opacity: 1, transform: 'translateY(0)' },
 }
 
 const animationStyle = StyleSheet.create({
 	animation: {
-		animationName: [combinedAnimation],
+		animationName: [opacityAnimation, translateYAnimation],
 		animationDuration: '3s, 1200ms',
 		animationIterationCount: '1, 3'
 	}
 })
+
 
 Notification.defaultProps = {
 	displayDrawer: false,
@@ -144,4 +152,3 @@ Notification.propTypes = {
 }
 
 export default Notification
-
