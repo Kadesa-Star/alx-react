@@ -1,29 +1,28 @@
-import { List, Map } from 'immutable';
+import Immutable from 'immutable';
 
 /**
  * Concatenates two arrays into an Immutable List.
  * @param {Array} page1 - First array.
  * @param {Array} page2 - Second array.
- * @returns {List} Immutable List containing values from both arrays.
+ * @returns {Immutable.List} Immutable List containing values from both arrays.
  */
-export function concatElements(page1, page2) {
-  return List(page1).concat(List(page2));
+function concatElements(page1, page2) {
+  const myList = Immutable.List(page1);
+  const myList2 = Immutable.List(page2);
+  return myList.concat(myList2);
 }
 
 /**
- * Merges two objects into an Immutable List.
+ * Merges two objects into an Immutable Map.
  * If a key exists in both objects, the value from page2 is used.
  * @param {Object} page1 - First object.
  * @param {Object} page2 - Second object.
- * @returns {List} Immutable List containing merged object values.
+ * @returns {Immutable.Map} Immutable Map containing merged key-value pairs.
  */
-export function mergeElements(page1, page2) {
-  const map1 = Map(page1);
-  const map2 = Map(page2);
-
-  // Merge the two maps, prioritizing values from page2
-  const mergedMap = map1.merge(map2);
-
-  // Convert the merged map's values into an Immutable List
-  return List(mergedMap.valueSeq());
+function mergeElements(page1, page2) {
+  const myMap = Immutable.Map(page1);
+  const myMap2 = Immutable.Map(page2);
+  return myMap.merge(myMap2);
 }
+
+export { concatElements, mergeElements };
