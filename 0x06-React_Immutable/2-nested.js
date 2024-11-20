@@ -1,8 +1,8 @@
+import Immutable from 'immutable';
+
 export default function accessImmutableObject(object, array) {
-  return array.reduce((current, key) => {
-    if (current && key in current) {
-      return current[key];
-    }
-    return undefined;
-  }, object);
+  // Convert plain object to Immutable.js structure
+  const myMap = Immutable.fromJS(object);
+  // Use getIn to retrieve the value at the specified path
+  return myMap.getIn(array);
 }
