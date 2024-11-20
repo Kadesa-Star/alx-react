@@ -1,7 +1,6 @@
-import { Map } from 'immutable';
+import Immutable from 'immutable';
 
-// Create the initial Immutable Map
-export const map = Map({
+export const map = Immutable.Map({
   1: 'Liam',
   2: 'Noah',
   3: 'Elijah',
@@ -10,8 +9,6 @@ export const map = Map({
   6: 'Lucas',
 });
 
-// Create a new Map with modified values using chained mutations
-export const map2 = map.merge({
-  2: 'Benjamin', // Update value at index 2
-  4: 'Oliver',
-});  // Update value at index 4 (unchanged in this case)
+export const map2 = map.withMutations((mutableMap) => {
+  mutableMap.set(2, 'Benjamin').set(4, 'Oliver');
+});
