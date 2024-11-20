@@ -1,21 +1,28 @@
 import Immutable from 'immutable';
 
 /**
- * Filters students with score >= 70 and formats their names
- * @param {Object} grades - The object containing student information.
+ * Filters students with a score > 70 and capitalizes the first letter
+ * of their first and last names. Then logs the result.
+ *
+ * @param {Object} students - An object of students with score and name details
  */
-function printBestStudents(grades) {
-  // Using seq to create a sequence and filter students with score >= 70
-  const filteredGrades = Immutable.Seq(grades)
-    .filter((student) => student.score >= 70)  // Filter students with score >= 70
+function printBestStudents(students) {
+  const capFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  // Convert the plain object into an Immutable.js sequence
+  const mySeq = Immutable.Seq(students);
+
+  // Filter students with score > 70 and capitalize their first and last names
+  const filtered = mySeq
+    .filter((student) => student.score > 70)
     .map((student) => ({
-      firstName: student.firstName.charAt(0).toUpperCase() + student.firstName.slice(1),
-      lastName: student.lastName.charAt(0).toUpperCase() + student.lastName.slice(1),
-      score: student.score,
+      ...student,
+      firstName: capFirstLetter(student.firstName),
+      lastName: capFirstLetter(student.lastName),
     }));
 
-  // Log the result
-  console.log(filteredGrades.toJS());
+  // Convert back to a plain JS object and log the result
+  console.log(filtered.toJS());
 }
 
 export default printBestStudents;
