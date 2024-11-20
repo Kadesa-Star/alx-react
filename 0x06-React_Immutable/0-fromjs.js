@@ -1,4 +1,4 @@
-const { fromjs.js } = require('immutable');
+const { fromJS } = require('immutable');
 
 
 /**
