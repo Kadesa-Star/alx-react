@@ -11,6 +11,7 @@ export const map = Map({
 });
 
 // Create a new Map with modified values using chained mutations
-export const map2 = map
-  .set(2, 'Benjamin') // Update value at index 2
-  .set(4, 'Oliver');  // Update value at index 4 (unchanged in this case)
+export const map2 = map.merge({
+  2: 'Benjamin', // Update value at index 2
+  4: 'Oliver',
+});  // Update value at index 4 (unchanged in this case)
