@@ -1,13 +1,10 @@
-const { fromJS } = require('immutable');
-
+import { fromJS } from 'immutable';
 
 /**
- * converts a plain js object into an Immutable.js Map
- * @param {Object} object - The input JS object
- * @returns {Map} - The Immutable.js Map representation of the object
+ * Converts a plain JavaScript object into an Immutable.js Map.
+ * @param {Object} object - The input JavaScript object.
+ * @returns {Map} - The Immutable.js Map representation of the object.
  */
-function getImmutableObject(object) {
-  return fromJS(object);
-}
+const getImmutableObject = (object) => fromJS(object);
 
-module.exports = getImmutableObject;
+export default getImmutableObject;
