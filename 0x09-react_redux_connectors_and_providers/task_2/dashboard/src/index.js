@@ -1,21 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App/App';
-import { createStore, applyMiddleware } from 'redux'; // Import applyMiddleware
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import uiReducer from './reducers/uiReducer'; // Adjust the path based on your file structure
-import thunk from 'redux-thunk'; // Import redux-thunk
+import thunk from 'redux-thunk';
+import rootReducer from './reducers'; // Assuming you have reducers
+import App from './App';
 
-// Create the Redux store and apply redux-thunk middleware
+// Enable Redux DevTools Extension if it's available
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
-  uiReducer,
-  applyMiddleware(thunk) // Apply redux-thunk to the store
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
 );
 
-// Render the App component wrapped with the Provider
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById('root')
 );
+
