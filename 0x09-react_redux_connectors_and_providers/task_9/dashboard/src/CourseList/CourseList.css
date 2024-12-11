@@ -1,0 +1,49 @@
+table {
+    display: table;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+tr {
+    transition: background-color 0.3s;
+}
+
+tr:hover {
+    background-color: #f0f0f0; /* Light background on hover */
+}
+
+td, th {
+    padding: 8px; /* Padding for better spacing */
+    border: 1px solid #ccc; /* Border for all cells */
+}
+
+tr th {
+    text-align: start;
+    border-bottom: 1px solid;
+}
+
+th[colSpan="2"] {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+th {
+    background-color: #e9ecef; /* Light grey background for headers */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light grey for even rows */
+}
+
+@media (max-width: 600px) {
+    table {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    th, td {
+        font-size: 14px; /* Adjust font size for readability */
+    }
+}
