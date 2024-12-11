@@ -9,6 +9,7 @@ import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import { displayNotificationDrawer, hideNotificationDrawer } from '../../actions/uiActions'; // Import action creators
 
 class App extends Component {
     constructor(props) {
@@ -37,14 +38,6 @@ class App extends Component {
         }
     };
 
-    handleDisplayDrawer = () => {
-        this.props.displayDrawer = true; // Use prop to handle display
-    };
-
-    handleHideDrawer = () => {
-        this.props.displayDrawer = false; // Use prop to hide drawer
-    };
-
     markNotificationAsRead = (id) => {
         const listNotifications = this.state.listNotifications.filter(
             notification => notification.id !== id
@@ -53,7 +46,7 @@ class App extends Component {
     };
 
     render() {
-        const { displayDrawer, isLoggedIn } = this.props; // Use displayDrawer prop
+        const { displayDrawer, isLoggedIn, displayNotificationDrawer, hideNotificationDrawer } = this.props; // Use functions from props
         const listCourses = [
             { id: 1, name: 'ES6', credit: '60' },
             { id: 2, name: 'Webpack', credit: '20' },
@@ -65,8 +58,8 @@ class App extends Component {
                 <Notifications
                     listNotifications={this.state.listNotifications}
                     displayDrawer={displayDrawer} // Using prop instead of state
-                    handleDisplayDrawer={this.handleDisplayDrawer}
-                    handleHideDrawer={this.handleHideDrawer}
+                    handleDisplayDrawer={displayNotificationDrawer} // Dispatching action via prop
+                    handleHideDrawer={hideNotificationDrawer} // Dispatching action via prop
                     markNotificationAsRead={this.markNotificationAsRead}
                 />
                 <Header />
@@ -99,8 +92,14 @@ const mapStateToProps = (state) => {
     };
 };
 
+// mapDispatchToProps function (simplified version)
+const mapDispatchToProps = {
+    displayNotificationDrawer,
+    hideNotificationDrawer
+};
+
 // Connect App to Redux
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 const primaryColor = '#E11D3F';
 
