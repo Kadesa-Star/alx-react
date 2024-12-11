@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import { connect } from 'react-redux'; // Added
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'; // Import PropTypes
 import Notifications from '../Notifications/Notifications';
 import { getLatestNotification } from '../utils/utils';
 import Login from '../Login/Login';
@@ -9,7 +10,7 @@ import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import { displayNotificationDrawer, hideNotificationDrawer } from '../../actions/uiActions'; // Import action creators
+import { displayNotificationDrawer, hideNotificationDrawer } from '../../actions/uiActions';
 
 class App extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class App extends Component {
     };
 
     render() {
-        const { displayDrawer, isLoggedIn, displayNotificationDrawer, hideNotificationDrawer } = this.props; // Use functions from props
+        const { displayDrawer, isLoggedIn, displayNotificationDrawer, hideNotificationDrawer } = this.props;
         const listCourses = [
             { id: 1, name: 'ES6', credit: '60' },
             { id: 2, name: 'Webpack', credit: '20' },
@@ -57,14 +58,14 @@ class App extends Component {
             <div className={css(bodyStyles.App)}>
                 <Notifications
                     listNotifications={this.state.listNotifications}
-                    displayDrawer={displayDrawer} // Using prop instead of state
-                    handleDisplayDrawer={displayNotificationDrawer} // Dispatching action via prop
-                    handleHideDrawer={hideNotificationDrawer} // Dispatching action via prop
+                    displayDrawer={displayDrawer}
+                    handleDisplayDrawer={displayNotificationDrawer} // Now handled via Redux
+                    handleHideDrawer={hideNotificationDrawer} // Now handled via Redux
                     markNotificationAsRead={this.markNotificationAsRead}
                 />
                 <Header />
                 <div className="App-body">
-                    {isLoggedIn // Using props instead of state
+                    {isLoggedIn
                         ? <BodySectionWithMarginBottom title="Course list">
                             <CourseList listCourses={listCourses} />
                           </BodySectionWithMarginBottom>
@@ -84,11 +85,27 @@ class App extends Component {
     }
 }
 
+// Define propTypes for the component
+App.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    displayDrawer: PropTypes.bool.isRequired,
+    displayNotificationDrawer: PropTypes.func.isRequired,
+    hideNotificationDrawer: PropTypes.func.isRequired,
+    logOut: PropTypes.func.isRequired
+};
+
+// Define defaultProps for the component
+App.defaultProps = {
+    isLoggedIn: false,
+    displayDrawer: false,
+    logOut: () => {} // Default noop function for logOut
+};
+
 // mapStateToProps function
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.ui.isLoggedIn, // Accessing isLoggedIn from uiReducer
-        displayDrawer: state.ui.isNotificationDrawerVisible, // Accessing displayDrawer from uiReducer
+        isLoggedIn: state.ui.isLoggedIn,
+        displayDrawer: state.ui.isNotificationDrawerVisible
     };
 };
 
